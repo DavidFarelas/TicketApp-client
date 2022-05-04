@@ -1,12 +1,21 @@
 import { SaveOutlined } from "@ant-design/icons";
 import { Form, Input, Button, InputNumber, Typography, Divider } from "antd";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { getUsuarioStorage } from "../helpers/getUsuarioStorage";
+import useHideMenu from "../hooks/useHideMenu";
 
 const Ingresar = () => {
   const navigate = useNavigate();
 
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  useHideMenu(false);
+
+  const [usuario] = useState(getUsuarioStorage());
+
+  const onFinish = ({ agente, escritorio }) => {
+    localStorage.setItem("agente", agente);
+    localStorage.setItem("escritorio", escritorio);
+
     navigate("/escritorio", { replace: true });
   };
 
@@ -15,6 +24,11 @@ const Ingresar = () => {
   };
 
   const { Title, Text } = Typography;
+
+  useEffect(() => {
+    if (usuario.agente && usuario.escritorio)
+      navigate("/escritorio", { replace: true });
+  }, [usuario, navigate]);
 
   return (
     <>
@@ -51,7 +65,7 @@ const Ingresar = () => {
 
         <Form.Item
           label="Escritorio"
-          name="Escritorio"
+          name="escritorio"
           rules={[
             {
               required: true,

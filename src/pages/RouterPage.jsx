@@ -10,14 +10,17 @@ import Ingresar from "./Ingresar";
 import Cola from "./Cola";
 import CrearTicket from "./CrearTicket";
 import Escritorio from "./Escritorio";
+import { useContext } from "react";
+import UiContext from "../context/UiContext";
 
 const { Sider, Content } = Layout;
 
 const RouterPage = () => {
+  const { ocultarMenu } = useContext(UiContext);
   return (
     <BrowserRouter>
       <Layout style={{ height: "100vh" }}>
-        <Sider collapsedWidth="0" breakpoint="md">
+        <Sider collapsedWidth="0" breakpoint="md" hidden={ocultarMenu}>
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
             <Menu.Item key="1" icon={<UserOutlined />}>

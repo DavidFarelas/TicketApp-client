@@ -1,25 +1,37 @@
 import { CloseCircleOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Row, Typography } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { getUsuarioStorage } from "../helpers/getUsuarioStorage";
+import useHideMenu from "../hooks/useHideMenu";
 
 const { Title, Text } = Typography;
 
 const Escritorio = () => {
+  const navigate = useNavigate();
+  useHideMenu(false);
+  const [usuario] = useState(getUsuarioStorage());
   const salir = () => {
-    console.log("salir");
+    localStorage.clear();
+    navigate("ingresar", { replace: true });
   };
 
   const siguienteTicket = () => {
     console.log("Siguiente ticket");
   };
 
+  useEffect(() => {
+    if (!usuario.agente || !usuario.escritorio)
+      navigate("/ingresar", { replace: true });
+  }, [usuario, navigate]);
+
   return (
     <>
       <Row>
         <Col span={20}>
-          <Title level={2}> David </Title>
+          <Title level={2}> {usuario.agente} </Title>
           <Text> Usted está trabajando en el escritorio: </Text>
-          <Text type="success"> 5 </Text>
+          <Text type="success"> {usuario.escritorio} </Text>
         </Col>
         <Col span={4} align="right">
           <Button shape="round" type="danger" onClick={salir}>
