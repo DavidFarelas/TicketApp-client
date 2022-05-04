@@ -17,7 +17,7 @@ const RouterPage = () => {
   return (
     <BrowserRouter>
       <Layout style={{ height: "100vh" }}>
-        <Sider>
+        <Sider collapsedWidth="0" breakpoint="md">
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
             <Menu.Item key="1" icon={<UserOutlined />}>
@@ -45,7 +45,7 @@ const RouterPage = () => {
               <Route path="cola" element={<Cola />} />
               <Route path="crear" element={<CrearTicket />} />
 
-              <Route path="crear" element={<Escritorio />} />
+              <Route path="escritorio" element={<Escritorio />} />
 
               <Route path="/*" element={<Navigate to="ingresar" replace />} />
             </Routes>
